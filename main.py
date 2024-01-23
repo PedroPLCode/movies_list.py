@@ -20,15 +20,20 @@ def get_series():
     return sorted(series, key=lambda series: series.title)
         
 def search(title):
+    search_results = []
     for element in movies_list:
         if title.strip().lower() == (element.title).strip().lower():
-            return element
+            search_results.append(element)
+    return search_results
 
 def generate_views():
-    movie_index = random.randint(0, len(movies_list - 1))
+    min = 0
+    max = len(movies_list) - 1
+    movie_index = random.randint(min, max)
     for element in movies_list:
         if movie_index == element.index:
-            element.play_counter += random.randint(1, 100)
+            views_to_add = random.randint(1, 100)
+            element.play_counter += views_to_add
             
 def generate_views_x_times(x=10):
     for i in range(1, x):
@@ -43,16 +48,17 @@ def top_titles(content_type=False):
         elif content_type == 'movies':
             return sorted(get_movies(), key=lambda element: element.play_counter)
 
+def get_random_genre():
+    return random.choice(["Action", "Drama", "Comedy", "Sci-Fi"])
 
+def get_random_year():
+    return random.randint(1950, 2023)
 
-
-
-    
 def create_movie(index_in_array):
     return Movie(index_in_array,
                   fake.name(),
-                  random.randint(1950, 2023),
-                  fake.name(),
+                  get_random_year(),
+                  get_random_genre(),
                   )
 
 def create_serial(index_in_array):
@@ -60,8 +66,8 @@ def create_serial(index_in_array):
                   random.randint(1, 10),
                   index_in_array,
                   fake.name(),
-                  random.randint(1950, 2023),
-                  fake.name(),
+                  get_random_year(),
+                  get_random_genre(),
                   )
     
 def create_list(type='movie', how_many=1):
@@ -74,12 +80,13 @@ def create_list(type='movie', how_many=1):
                 )    
         return array
     else:
-        print("Error. Wrong contact type. Only movie or serial.")
+        print("Error. Wrong type. Only movie or serial.")
         return False
     
-def show_all(list):
+def show(list):
     for element in list:
-        print(element)
+        print(repr(element))
     
-movies_list = create_list('movie', 100)
-show_all(get_movies())
+movies_list = create_list('serial', 1024)
+#generate_views_x_times(10)
+show(get_series())
