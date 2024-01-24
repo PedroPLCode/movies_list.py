@@ -1,8 +1,8 @@
 from movie import Movie
 from serial import Serial
-import random
 from faker import Faker
 from datetime import date
+import random
 
 fake = Faker()
 today = date.today()
@@ -13,13 +13,29 @@ def get_movies():
         if not isinstance(element, Serial):
             movies.append(element)
     return sorted(movies, key=lambda element: element.title)
-# te dwie w jedną funkcję zrobić
+
 def get_series():
     series = []
     for element in movies_list:
         if isinstance(element, Serial):
             series.append(element)
     return sorted(series, key=lambda series: series.title)
+
+def get_selected_type(type):
+    if type == 'movies' or type == 'series':
+        series = []
+        movies = []
+        for element in movies_list:
+            if isinstance(element, Serial):
+                series.append(element)
+            else:
+                movies.append(element)
+        series = sorted(series, key=lambda series: series.title)
+        movies = sorted(movies, key=lambda movies: movies.title)
+        return series if type == 'series' else movies
+    else:
+        print("Error. Wrong movie type. Only movies or series.")
+        return False
         
 def search(title):
     search_results = []
