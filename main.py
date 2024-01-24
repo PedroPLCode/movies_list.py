@@ -7,20 +7,6 @@ import random
 fake = Faker()
 today = date.today()
 
-def get_movies():
-    movies = []
-    for element in movies_list:
-        if not isinstance(element, Serial):
-            movies.append(element)
-    return sorted(movies, key=lambda element: element.title)
-
-def get_series():
-    series = []
-    for element in movies_list:
-        if isinstance(element, Serial):
-            series.append(element)
-    return sorted(series, key=lambda series: series.title)
-
 def get_selected_type(type):
     if type == 'movies' or type == 'series':
         series = []
